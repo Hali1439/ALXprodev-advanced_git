@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Find all top-level directories, excluding .git
+missing_readmes=()
+for dir in $(find . -mindepth 1 -maxdepth 1 -type d ! -name ".git"); do
+    if [ ! -f "$dir/README.md" ]; then
+        missing_readmes+=("$dir")
+    fi
+done
+
+# If missing READMEs, fail the commit
+if [ ${#missing_readmes[@]} -ne 0 ]; then
+    echo "❌ Commit rejected! Missing README.md in:"
+    for d in "${missing_readmes[@]}"; do
+        echo "  - $d"
+    done
+    exit 1
+fi
+
+exit 0
