@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Check if current branch is main
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch" = "main" ]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Merge completed into main by $(git config user.name)" >> merge.log
+fi
